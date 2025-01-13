@@ -103,21 +103,57 @@
 % \end{list1}
 
 
-\newcommand{\matchSlide}[1]{
+\newcommand{\matchfigSlide}[1]{
   \slide{Matching}
   \vspace*{0.5cm}
   \begin{center}
     \includegraphics[height=16cm]{#1}
   \end{center}
 }
-\matchSlide{match1.pdf}
-\matchSlide{match2.pdf}
+\matchfigSlide{match1.pdf}
+\matchfigSlide{match2.pdf}
 \addtocounter{page}{-1}
-\matchSlide{match3.pdf}
+\matchfigSlide{match3.pdf}
 \addtocounter{page}{-1}
-\matchSlide{match4.pdf}
+\matchfigSlide{match4.pdf}
 \addtocounter{page}{-1}
-\addtocounter{page}{-1}
+
+\slide{Complications}
+
+\begin{list1}
+  \item Resource Usage
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Algorithms that work nicely for 100 objects might be
+          (much) too slow for 1,000,000 objects
+    \item Memory usage can be an issue
+  \end{list2}
+  \item Spherical geometry
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Careful when calculating distances for nearby objects (numerics)
+    \item Careful near the antimeridian
+    \item Careful near the poles
+    \item How to chop the sky up into boxes?
+  \end{list2}
+  \item Other geometries
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item N-dimensional Cartesian spaces
+    \item Sky + N-dimensional Cartesian spaces
+  \end{list2}
+  \item Different match criteria
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Per-object error radius
+    \item Elliptical/anisotropic match radius
+  \end{list2}
+  \item Other problems
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Which objects {\sl don't\/} have any matches?
+  \end{list2}
+\end{list1}
 
 \newpage
 
