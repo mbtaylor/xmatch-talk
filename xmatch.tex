@@ -92,21 +92,89 @@
 }
 \end{center}
 
-\vspace*{2cm}
+\vspace*{1.5cm}
 \begin{center}
   \tiny
   \color{brown}
-  \verb|$Id: sql.tex,v 1.17 2024/05/03 11:56:03 mbt Exp $|
+  \input gitid
 \end{center}
 
 % \slide{Summary}
 
-% \begin{list1}
-%   \item SQL
-%   \item ADQL $+$ TAP
-%   \item Examples with TOPCAT
-% \end{list1}
+\slide{Matching}
 
+\begin{list0}
+  \item Typical science question:
+  \begin{list2big}
+    \item[] {\color{darkred}\sl
+             Which sources from one observation correspond to
+             which sources from another observation?}
+  \end{list2big}
+  \item Basic mathematical question:
+  \begin{list2big}
+    \item[] {\color{darkred}\sl
+             Which positions in a list are close to
+             which positions in another list
+             (for some definition of ``close to'')}
+  \end{list2big}
+  \item Conceptually straightforward ...
+  \item ... but there are complications
+\end{list0}
+
+
+\slide{Complications}
+
+\begin{list1}
+\vspace*{-0.2cm}
+  \item Resource Usage
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Algorithms that work nicely for 100 objects might be
+          (much) too slow for 1,000,000 objects
+\vspace*{-0.1cm}
+    \item Memory usage can be an issue
+  \end{list2}
+\vspace*{-0.2cm}
+  \item Spherical geometry
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Careful when calculating distances for nearby objects (numerics)
+\vspace*{-0.1cm}
+    \item Careful near the antimeridian
+\vspace*{-0.1cm}
+    \item Careful near the poles
+\vspace*{-0.1cm}
+    \item How to chop the sky up into boxes?
+  \end{list2}
+\vspace*{-0.2cm}
+  \item Other geometries
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item N-dimensional Cartesian spaces
+\vspace*{-0.1cm}
+    \item Sky + N-dimensional Cartesian spaces
+  \end{list2}
+\vspace*{-0.2cm}
+  \item Different match criteria
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Per-object error radius
+\vspace*{-0.1cm}
+    \item Elliptical/anisotropic match radius
+  \end{list2}
+\vspace*{-0.2cm}
+  \item Related questions
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Which objects {\sl don't\/} have any matches?
+  \end{list2}
+\vspace*{-0.2cm}
+  \item Correctness
+\vspace*{-0.2cm}
+  \begin{list2}
+    \item Are you sure you've got the right answer?
+  \end{list2}
+\end{list1}
 
 \newcommand{\matchfigSlide}[1]{
   \slide{Matching}
@@ -122,43 +190,6 @@
 \addtocounter{page}{-1}
 \matchfigSlide{match4.pdf}
 \addtocounter{page}{-1}
-
-\slide{Complications}
-
-\begin{list1}
-  \item Resource Usage
-\vspace*{-0.2cm}
-  \begin{list2}
-    \item Algorithms that work nicely for 100 objects might be
-          (much) too slow for 1,000,000 objects
-    \item Memory usage can be an issue
-  \end{list2}
-  \item Spherical geometry
-\vspace*{-0.2cm}
-  \begin{list2}
-    \item Careful when calculating distances for nearby objects (numerics)
-    \item Careful near the antimeridian
-    \item Careful near the poles
-    \item How to chop the sky up into boxes?
-  \end{list2}
-  \item Other geometries
-\vspace*{-0.2cm}
-  \begin{list2}
-    \item N-dimensional Cartesian spaces
-    \item Sky + N-dimensional Cartesian spaces
-  \end{list2}
-  \item Different match criteria
-\vspace*{-0.2cm}
-  \begin{list2}
-    \item Per-object error radius
-    \item Elliptical/anisotropic match radius
-  \end{list2}
-  \item Other problems
-\vspace*{-0.2cm}
-  \begin{list2}
-    \item Which objects {\sl don't\/} have any matches?
-  \end{list2}
-\end{list1}
 
 \newpage
 
