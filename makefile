@@ -1,6 +1,7 @@
 .SUFFIXES: .tex .pdf .view
 
 DOCS = xmatch
+VCS_STAMP = gitid.tex
 STILTS = stilts
 
 DATA = points.fits pairs.fits pairs1.fits pairs2.fits
@@ -10,7 +11,7 @@ PDFLATEX = env TEXINPUTS=:/mbt/local/share/texslides pdflatex
 
 build: $(DOCS:=.pdf) $(DATA)
 
-xmatch.pdf: $(FIGS)
+xmatch.pdf: $(FIGS) $(VCS_STAMP)
 
 view: xmatch.view
 
@@ -77,11 +78,15 @@ match4.pdf: points.fits pairs.fits
                  seq=_1a,_1b,_31a,_31b,_32a,_32b,_3x \
                  out=$@
 
-
-                 
+$(VCS_STAMP):
+	echo -n '{\\tt ' >$@
+	pwd | sed 's%.*/%%' >>$@
+	echo -n '{\\jobname}.tex ' >>$@
+	echo -n `git log -1 --pretty="format:%h %ci" | sed "s/ [+-].*//"`>>$@
+	echo '}' >>$@
 
 clean:
-	rm -f $(DATA) $(FIGS)
+	rm -f $(DATA) $(FIGS) $(VCS_STAMP)
 	rm -f $(DOCS:=.aux) $(DOCS:=.log) $(DOCS:=.out) $(DOCS:=.pdf)
 
 .tex.pdf:
