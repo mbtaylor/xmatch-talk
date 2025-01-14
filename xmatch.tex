@@ -3,6 +3,7 @@
 \usepackage[english]{babel}
 \usepackage{graphicx}
 \usepackage{marvosym}
+\usepackage{amssymb}  % provides \gtrsim
 \usepackage{ellipse}
 \usepackage{fancyvrb}
 \usepackage{ulem}  % provides \sout
@@ -114,13 +115,34 @@
   \begin{list2big}
     \item[] {\color{darkred}\sl
              Which positions in a list are close to
-             which positions in another list
+             which positions in another list?
              (for some definition of ``close to'')}
   \end{list2big}
   \item Conceptually straightforward ...
+  \begin{list2big}
+    \item for each position in one list, test each position in the other list
+    \item write it yourself?
+  \end{list2big}
   \item ... but there are complications
+% \begin{list2big}
+%   \item maybe use existing software
+% \end{list2big}
 \end{list0}
 
+\newcommand{\matchfigSlide}[1]{
+  \slide{Matching}
+  \vspace*{0.5cm}
+  \begin{center}
+    \includegraphics[height=16cm]{#1}
+  \end{center}
+}
+\matchfigSlide{match1.pdf}
+\matchfigSlide{match2.pdf}
+\addtocounter{page}{-1}
+\matchfigSlide{match3.pdf}
+\addtocounter{page}{-1}
+\matchfigSlide{match4.pdf}
+\addtocounter{page}{-1}
 
 \slide{Complications}
 
@@ -176,26 +198,159 @@
   \end{list2}
 \end{list1}
 
-\newcommand{\matchfigSlide}[1]{
-  \slide{Matching}
-  \vspace*{0.5cm}
-  \begin{center}
-    \includegraphics[height=16cm]{#1}
-  \end{center}
+
+\newcommand{\tcslide}[1]{
+  \newpage
+  \begin{picture}(32,0)
+  \put(0,-19){\includegraphics[height=19cm]{tclogo.pdf}}
+  \put(21,-9){\begin{minipage}{16cm} #1 \end{minipage}}
+  \end{picture}
 }
-\matchfigSlide{match1.pdf}
-\matchfigSlide{match2.pdf}
-\addtocounter{page}{-1}
-\matchfigSlide{match3.pdf}
-\addtocounter{page}{-1}
-\matchfigSlide{match4.pdf}
+
+\tcslide{}
+\tcslide{
+  \begin{list0}
+    \item Get TOPCAT to do it for you!
+    \begin{list2big}
+      \item Internal match functionality
+      \item Talk to match-capable external services
+    \end{list2big}
+  \end{list0}
+}
 \addtocounter{page}{-1}
 
-\newpage
+\slide{TOPCAT Internal Matching Function}
 
-\begin{center}
-\includegraphics[scale=2.7]{tclogo.pdf}
-\end{center}
+\begin{picture}(30,0)
+\put(23,-17){\includegraphics[height=17cm]{MatchWindow.png}}
+\end{picture}
+\vspace*{-1.5cm}
+
+\begin{list0}
+  \item TOPCAT can match tables you've loaded into it
+  \begin{list2big}
+    \item Use \buttimg{matchTwo2.png} {\bf Pair Match} window
+    \begin{list3}
+      \item (other windows in {\bf Joins} menu for
+             matching 1 or 3, 4, 5, ... tables)
+    \end{list3}
+    \item Select match type, input tables etc and hit {\bf Go}
+    \item Result is usually a new matched table
+  \end{list2big}
+  \item Works well up to $\sim$ 10 million rows
+  \begin{list3}
+    \item though you can push it further with time and memory
+  \end{list3}
+  \item Pretty fast ($\lesssim$ couple of minutes)
+  \item Quite flexible
+  \begin{list3}
+    \item sky, Cartesian, exact, 3D, ellipses, errors, combinations, ...
+  \end{list3}
+\end{list0}
+
+\slide{TOPCAT for External Match Services}
+
+\begin{picture}(30,0)
+\put(24,-17){\includegraphics[height=17cm]{CdsUploadMatchWindow.png}}
+\end{picture}
+\vspace*{-1.5cm}
+
+\begin{list0}
+  \item TOPCAT can send a table you've loaded to a match service
+  \item Usually best: {\bf CDS X-Match Service}
+  \begin{list2big}
+    \item Use \buttimg{xm3.png} {\bf CDS X-Match Upload} window
+    \item Fill in remote (VizieR) table
+    \begin{list3}
+      \item Select from menu, or use
+            \bhref{https://vizier.cds.unistra.fr/}{VizieR web page}
+            to find ID
+    \end{list3}
+    \item Fill in local table, match criteria etc, hit {\bf Go}
+    \item No size limit (TOPCAT chops up query into chunks for you)
+    \item Usually pretty fast
+    \begin{list2big}
+      \item[] ... but sometimes slow or broken.
+              Complain to \bhref{mailto:cds-question@unistra.fr}{CDS} or me.
+    \end{list2big}
+    \item May not have all the columns you want
+  \end{list2big}
+  \item Other options:
+  \begin{list2big}
+    \item TAP upload query (flexible, harder to use)
+    \item Multi-cone search (slow, not generally recommended)
+  \end{list2big}
+  \item Works for external tables too large to load (e.g.\ large surveys)
+  \item Result is a new matched table
+\end{list0}
+
+\slide{STILTS}
+
+\vspace*{-0.2cm}
+\begin{list0}
+  \item STILTS is a set of command-line tools
+  \begin{list2big}
+    \item Does more or less all the same things as TOPCAT, but scriptably
+    \item In some cases more scalable than TOPCAT
+          (but generally not for matching commands)
+    \item Can run it like:\\
+          \hspace*{3em}
+          {\color{brown}\verb|stilts <subcommand> arg=value arg=value ...|} \\
+          or maybe: \\
+          \hspace*{3em}
+          {\color{brown}\verb|topcat -stilts <subcommand> arg=value arg=value ...|}
+    \item Lots of documentation at
+          \burl{http://www.starlink.ac.uk/stilts/sun256/}
+  \end{list2big}
+  \item STILTS matching commands:
+  \begin{list2}
+    \item[] {\color{brown}\tt tmatch2}: match 2 tables locally
+    \item[] {\color{brown}\tt tmatch1}: match within 1 table locally
+    \item[] {\color{brown}\tt cdsskymatch}: match local table with remote one
+                                            using CDS X-Match service
+    \item[] {\color{brown}\tt tapskymatch}: match local table with remote one
+                                            using TAP service
+    \item[] \hspace*{2em} ... etc
+  \end{list2}
+\vspace*{-0.2cm}
+  \item Example: \\
+\vspace*{-0.2cm}
+        {\color{brown}\small
+        \begin{verbatim}
+    stilts tmatch2 in1=obs_v.xml in2=obs_i.xml out=obs_iv.xml \
+                   matcher=sky values1="ra dec" values2="ra dec" params="2"
+        \end{verbatim}}
+\end{list0}
+
+\slide{TOPCAT/STILTS Interoperability}
+
+
+\slide{TOPCAT/STILTS Matching Limitations}
+
+\begin{list0}
+  \item Scalability
+  \begin{list2}
+    \item TOPCAT internal matching doesn't work so well for large catalogues
+    \begin{list3}
+      \item $N \lesssim 10^{7}$ usually OK, more than that may need more memory
+    \end{list3}
+    \item Can get into trouble with lots of positions close together
+    \item Symptoms of failure: match runs very slowly/grinds to a halt
+  \end{list2}
+  \item Functionality
+  \begin{list2}
+    \item None of these techniques do anything very clever:
+          just find pairs satisfying match criteria
+    \item You might want other answers
+    \begin{list3}
+      \item Probability of a real association
+      \item ... given additional constraints like colour/magnitude/spectrum
+      \item ... from observations with widely different resolutions
+      \item ... given local environment (potential match density)
+    \end{list3}
+  \end{list2}
+\end{list0}
+
 
 \label{lastPage}
 \end{document}
