@@ -252,15 +252,15 @@
     \item Select match type, input tables etc and hit {\bf Go}
     \item Result is usually a new matched table
   \end{list2big}
-  \item Works well up to $\sim$ 10 million rows
-  \begin{list3}
+  \item Works well up to a few million rows
+  \begin{list2big}
     \item though you can push it further with time and memory
-  \end{list3}
+  \end{list2big}
   \item Pretty fast ($\lesssim$ couple of minutes)
   \item Quite flexible
-  \begin{list3}
+  \begin{list2big}
     \item sky, Cartesian, exact, 3D, ellipses, errors, combinations, ...
-  \end{list3}
+  \end{list2big}
 \end{list0}
 
 \slide{TOPCAT for External Match Services}
@@ -319,13 +319,17 @@
   \end{list2big}
   \item STILTS matching commands:
   \begin{list2}
-    \item[] {\color{brown}\tt tmatch2}: match 2 tables locally
-    \item[] {\color{brown}\tt tmatch1}: match within 1 table locally
-    \item[] {\color{brown}\tt cdsskymatch}: match local table with remote one
-                                            using CDS X-Match service
-    \item[] {\color{brown}\tt tapskymatch}: match local table with remote one
-                                            using TAP service
-    \item[] \hspace*{2em} ... etc
+    \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tmatch2.html}
+                  {\tt tmatch2}: match 2 tables locally
+    \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tmatch1.html}
+                  {\tt tmatch1}: match within a single table locally
+    \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/cdsskymatch.html}
+                  {\tt cdsskymatch}: match local table with remote one
+                                     using CDS X-Match service
+    \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tapskymatch.html}
+                  {\tt tapskymatch}: match local table with remote one
+                                     using TAP service
+    \item[] \hspace*{2em} ... and a few others
   \end{list2}
 \vspace*{-0.2cm}
   \item Example: \\
@@ -337,7 +341,45 @@
         \end{verbatim}}
 \end{list0}
 
-\slide{TOPCAT/STILTS Interoperability}
+\newcommand{\interopSlide}[1]{
+  \slide{TOPCAT/STILTS Interoperability}
+
+  \begin{picture}(30,0)
+    \linethickness{0.2cm}
+    \put(18,-16){\includegraphics[scale=0.7]{PairMatchWindow.png}}
+    #1
+  \end{picture}
+  \vspace*{-1.5cm}
+
+  \begin{list0}
+    \item Some TOPCAT windows can report \\
+          equivalent STILTS command
+    \begin{list2big}
+      \item New since v4.10-2 (November 2024) \\
+            --- you'll need a recent version
+      \item Look for the \buttimg{stilts.png} {\bf STILTS} toolbar button
+      \item Copy'n'paste text into shell
+      \item ... sometimes needs a few adjustments
+      \item Use \buttimg{stiltshelp.png} {\bf STILTS HELP} button \\
+            for help on the command displayed
+    \end{list2big}
+  \end{list0}
+}
+\newcommand{\ifigStiltsbutt}{\put(21.4,-1.3){\color{red}\ellipse{1}{1}}}
+\newcommand{\ifigStiltswin}{\put(26,-9){\includegraphics[scale=0.7]
+                                         {PairMatch-stilts.png}}}
+\newcommand{\ifigHelpbutt}{\put(28.6,-3.5){\color{red}\ellipse{1}{1}}}
+\newcommand{\ifigHelpwin}{\put(17,-17){\includegraphics[height=14cm]
+                                        {tmatch2-docs.png}}}
+\interopSlide{}
+\interopSlide{\ifigStiltsbutt}
+\addtocounter{page}{-1}
+\interopSlide{\ifigStiltsbutt \ifigStiltswin}
+\addtocounter{page}{-1}
+\interopSlide{\ifigStiltswin \ifigHelpbutt}
+\addtocounter{page}{-1}
+\interopSlide{\ifigStiltswin \ifigHelpwin}
+\addtocounter{page}{-1}
 
 
 \slide{TOPCAT/STILTS Matching Limitations}
@@ -360,8 +402,9 @@
     \begin{list3}
       \item Probability of a real association
       \item ... given additional constraints like colour/magnitude/spectrum
-      \item ... from observations with widely different resolutions
-      \item ... given local environment (potential match density)
+      \item ... given local environment (e.g.\ source density)
+      \item Matching observations with widely different resolutions
+      \item Matching points to extended sources
     \end{list3}
   \end{list2}
 \end{list0}
