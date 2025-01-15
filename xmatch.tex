@@ -518,10 +518,21 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
 
 \label{lastPage}
 
+\newcommand{\aobSlide}[1]{
 \newpage
 \rightfooter{}
 \MyLogo{}
+\begin{picture}(30,0)
+  #1
+\end{picture}
 \bigword{AOB?}
+}
+\aobSlide{}
+\aobSlide{
+  \put(25.6,-19.2){\includegraphics[height=3.5cm]{spam.jpg}}
+  \put(31,-19){\includegraphics[height=5cm]{beans.jpg}}
+  \put(25,-19){\includegraphics[height=6cm,angle=-10]{wkd.png}}
+}
 
 \end{document}
 
