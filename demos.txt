@@ -1,0 +1,34 @@
+Load /mbt/devel/text/shristi2021/*.fits
+
+Pair Match
+   plei-2mass vs plei-gaia
+   Max Error: 3 arcsec
+   Plot Result
+   View table columns/rows
+   Histogram separation
+   STILTS button in Pair Match window
+      Copy-paste-run
+      See help page
+   Sky with Errors:
+      hypot(errMaj,errMin)/deg, hypot(ra_error,dec_error)*.001/arcsec
+      won't work (proper motions)
+      see stilts command changed
+   
+CDS X-Match:
+   Remote: 2MASS
+   Local: plei-gaia
+   Radius: 1.1
+   Plot, add Pairs layer
+
+Tricksy pair match:
+   ngc346-gaia vs. ngc346-gouliermis
+   Plot them both on the sky
+   Pair Match with 1 arcsec and Find=ALL
+   Too many rows
+   histogram of separation
+   Define delta_ra=ra-_RAJ2000, delta_dec=dec-_DEJ2000
+   Plot delta_ra vs. delta_dec
+   New subset for overdensity
+   Use that in match result plot
+
+
