@@ -115,11 +115,30 @@
   \input gitid
 \end{center}
 
-% \slide{Summary}
+\slide{Outline}
+
+\begin{list1}
+  \item What is matching?
+  \item Matching in TOPCAT
+  \begin{list2big}
+    \item Local matching function
+    \item Using remote services
+  \end{list2big}
+  \item Using STILTS
+\end{list1}
 
 \slide{Matching}
 
 \begin{list0}
+  \item What's crossmatching/why crossmatch?
+  \begin{list2}
+    \item Identify which rows in one table correspond to
+                   which rows in another table
+    \item ... typically in different observational regimes (e.g.\ wavelength)
+    \item ... typically on basis of sky position (closest objects match)
+    \item ... typically to combine observations,
+              e.g.\ multi-wavelength photometry
+  \end{list2}
   \item Typical science question:
   \begin{list2big}
     \item[] {\color{darkred}\sl
@@ -153,6 +172,8 @@
 }
 \matchfigSlide{match1.pdf}
 \matchfigSlide{match2.pdf}
+\addtocounter{page}{-1}
+\matchfigSlide{match1.pdf}
 \addtocounter{page}{-1}
 \matchfigSlide{match3.pdf}
 \addtocounter{page}{-1}
@@ -227,14 +248,14 @@
   \begin{list0}
     \item Get TOPCAT to do it for you!
     \begin{list2big}
-      \item Internal match functionality
+      \item Local match functionality
       \item Talk to match-capable external services
     \end{list2big}
   \end{list0}
 }
 \addtocounter{page}{-1}
 
-\slide{TOPCAT Internal Matching Function}
+\slide{TOPCAT Local Matching Function}
 
 \begin{picture}(30,0)
 \put(23,-17){\includegraphics[height=17cm]{MatchWindow.png}}
@@ -251,12 +272,13 @@
     \end{list3}
     \item Select match type, input tables etc and hit {\bf Go}
     \item Result is usually a new matched table
+    \item Bonus: \buttimg{plotbutt1.png} button
   \end{list2big}
   \item Works well up to a few million rows
   \begin{list2big}
     \item though you can push it further with time and memory
   \end{list2big}
-  \item Pretty fast ($\lesssim$ couple of minutes)
+  \item Quite fast ($\lesssim$ couple of minutes)
   \item Quite flexible
   \begin{list2big}
     \item sky, Cartesian, exact, 3D, ellipses, errors, combinations, ...
@@ -336,9 +358,78 @@
 \vspace*{-0.2cm}
         {\color{brown}\small
         \begin{verbatim}
-    stilts tmatch2 in1=obs_v.xml in2=obs_i.xml out=obs_iv.xml \
+    stilts tmatch2 in1=obs_v.fits in2=obs_i.fits out=obs_iv.fits \
                    matcher=sky values1="ra dec" values2="ra dec" params="2"
         \end{verbatim}}
+\end{list0}
+
+\newcommand{\ca}[1]{{\color{darkgreen}#1}}
+\newcommand{\cb}[1]{{\color{teal}#1}}
+\newcommand{\cc}[1]{{\color{hotpink}#1}}
+\newcommand{\ccomm}[1]{{\color{black}#1}}
+\begin{SaveVerbatim}[commandchars=\\\{\}]{filter-example}
+stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
+               matcher=sky values1='ra dec' values2='ra dec' params=1.5
+               scorecol=DIST
+               \ca{icmd1='select vmag<22'}                    \ccomm{# filter rows from input table 1}
+               \cb{icmd2='addcol size hypot(ra_err,dec_err)'} \ccomm{# add a column to input table 2}
+               \cc{ocmd='sort -down DIST' ocmd='head 100'}    \ccomm{# keep only 100 closest matches in output}
+\end{SaveVerbatim}
+
+\slide{STILTS Pipelines}
+
+\begin{list0}
+  \item You can do on-the-fly processing on (nearly) all STILTS input
+        and output tables
+  \begin{list2big}
+    \item Use additional parameters like
+          {\color{brown}\verb|cmd=<filter-command>|}
+\vspace*{-0.2cm}
+    \item Filters stack like a Unix pipeline
+\vspace*{-0.2cm}
+    \item Example:
+    \begin{list3}
+       \item[] {\color{grey} \UseVerbatim{filter-example}}
+    \end{list3}
+\vspace*{-0.5cm}
+    \item There are lots of filters:
+\vspace*{-0.2cm}
+    \begin{list3}
+      \item {\color{brown}\tt addcol},
+            {\color{brown}\tt addskycoords},
+            {\color{brown}\tt assert},
+            {\color{brown}\tt badval},
+            {\color{brown}\tt every},
+            {\color{brown}\tt fixcolnames},
+            {\color{brown}\tt keepcols},
+            {\color{brown}\tt progress},
+            {\color{brown}\tt repeat},
+            {\color{brown}\tt rowrange},
+          % {\color{brown}\tt sorthead},
+            {\color{brown}\tt uniq},
+            ...
+      \item Or see the
+            \bhref{http://www.starlink.ac.uk/stilts/sun256/filterSteps.html}
+                  {full list}
+    \end{list3}
+  \end{list2big}
+\vspace*{-0.2cm}
+  \item There are options for what happens to output tables:
+\vspace*{-0.2cm}
+  \begin{list2big}
+    \item Use {\color{brown}\verb|omode=<mode>|} parameter
+\vspace*{-0.2cm}
+    \begin{list3}
+      \item {\color{brown}\tt omode=out} write table to file
+            \ \ {\sl (default)}
+      \item {\color{brown}\tt omode=topcat} load into running TOPCAT
+      \item {\color{brown}\tt omode=count} count rows
+      \item {\color{brown}\tt omode=stats} show statistics
+      \item[] ... etc (see 
+            \bhref{http://www.starlink.ac.uk/stilts/sun256/outModes.html}
+                  {full list})
+    \end{list3}
+  \end{list2big}
 \end{list0}
 
 \newcommand{\interopSlide}[1]{
@@ -387,7 +478,7 @@
 \begin{list0}
   \item Scalability
   \begin{list2}
-    \item TOPCAT internal matching doesn't work so well for large catalogues
+    \item TOPCAT local matching doesn't work so well for large catalogues
     \begin{list3}
       \item $N \lesssim 10^{7}$ usually OK, more than that may need more memory
     \end{list3}
@@ -407,6 +498,22 @@
       \item Matching points to extended sources
     \end{list3}
   \end{list2}
+\end{list0}
+
+\slide{Summary/Tips}
+
+\begin{list0}
+  \item Smallish tables:
+  \begin{list2big}
+    \item Use TOPCAT match window/STILTS {\color{brown}\tt tmatch*} commands
+  \end{list2big}
+  \item Smallish table {\sl vs.\/} large survey
+  \begin{list2big}
+    \item Use TOPCAT CDS Upload X-Match window/STILTS {\color{brown}\tt cdsskymatch} command
+    \item Or maybe a TAP upload query or multi-cone if that's no good
+  \end{list2big}
+  \item Plot results to understand what you've got!
+  \item TOPCAT can tell you what STILTS command to use
 \end{list0}
 
 \label{lastPage}
