@@ -118,7 +118,7 @@
 \slide{Outline}
 
 \begin{list1}
-  \item What is matching?
+  \item What is crossmatching?
   \item Matching in TOPCAT
   \begin{list2big}
     \item Local matching function
@@ -373,7 +373,7 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
                scorecol=DIST
                \ca{icmd1='select vmag<22'}                    \ccomm{# filter rows from input table 1}
                \cb{icmd2='addcol size hypot(ra_err,dec_err)'} \ccomm{# add a column to input table 2}
-               \cc{ocmd='sort -down DIST' ocmd='head 100'}    \ccomm{# keep only 100 closest matches in output}
+               \cc{ocmd='sort DIST' ocmd='head 100'}    \ccomm{# keep only 100 closest matches in output}
 \end{SaveVerbatim}
 
 \slide{STILTS Pipelines}
@@ -496,6 +496,7 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
       \item ... given local environment (e.g.\ source density)
       \item Matching observations with widely different resolutions
       \item Matching points to extended sources
+      \item True associations between $N>2$ tables
     \end{list3}
   \end{list2}
 \end{list0}
@@ -512,8 +513,16 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
     \item Use TOPCAT CDS Upload X-Match window/STILTS {\color{brown}\tt cdsskymatch} command
     \item Or maybe a TAP upload query or multi-cone if that's no good
   \end{list2big}
-  \item Plot results to understand what you've got!
+  \item Examine match results --- they may not mean what you think
+  \begin{list2big}
+    \item Plot associations on the sky (or relevant space)
+    \item Look at separation statistics, e.g.\ plot histograms
+    \item Careful of best-only results
+  \end{list2big}
   \item TOPCAT can tell you what STILTS command to use
+  \item Extended TOPCAT crossmatching talk:
+        \bhref{https://youtu.be/mdMtmy3Zq-Q&t=3582s}{video} and
+        \bhref{https://www.star.bristol.ac.uk/mbt/talks/shristi2021/}{materials}
 \end{list0}
 
 \label{lastPage}
