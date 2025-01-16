@@ -295,6 +295,7 @@
 
 \begin{list0}
   \item TOPCAT can send a table you've loaded to a match service
+  \item Works for external tables too large to load (e.g.\ large surveys)
   \item Usually best: {\bf CDS X-Match Service}
   \begin{list2big}
     \item Use \buttimg{xm3.png} {\bf CDS X-Match Upload} window
@@ -318,7 +319,6 @@
     \item TAP upload query (flexible, harder to use)
     \item Multi-cone search (slow, not generally recommended)
   \end{list2big}
-  \item Works for external tables too large to load (e.g.\ large surveys)
   \item Result is a new matched table
 \end{list0}
 
@@ -329,8 +329,10 @@
   \item STILTS is a set of command-line tools
   \begin{list2big}
     \item Does more or less all the same things as TOPCAT, but scriptably
+\vspace*{-0.2cm}
     \item In some cases more scalable than TOPCAT
           (but generally not for matching commands)
+\vspace*{-0.2cm}
     \item Can run it like:\\
           \hspace*{3em}
           {\color{brown}\verb|stilts <subcommand> arg=value arg=value ...|} \\
@@ -342,16 +344,27 @@
   \end{list2big}
   \item STILTS matching commands:
   \begin{list2}
+\vspace*{-0.2cm}
+    \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tskymatch2.html}
+                  {\tt tskymatch2}: simple sky match 2 tables locally
+\vspace*{-0.2cm}
     \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tmatch2.html}
-                  {\tt tmatch2}: match 2 tables locally
+                  {\tt tmatch2}: flexible match 2 tables locally
+\vspace*{-0.2cm}
     \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tmatch1.html}
                   {\tt tmatch1}: match within a single table locally
+\vspace*{-0.2cm}
+    \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tmatchn.html}
+                  {\tt tmatchn}: match multiple tables locally
+\vspace*{-0.2cm}
     \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/cdsskymatch.html}
                   {\tt cdsskymatch}: match local table with remote one
+\vspace*{-0.2cm}
                                      using CDS X-Match service
     \item[] \bhref{http://www.starlink.ac.uk/stilts/sun256/tapskymatch.html}
                   {\tt tapskymatch}: match local table with remote one
                                      using TAP service
+\vspace*{-0.2cm}
     \item[] \hspace*{2em} ... and a few others
   \end{list2}
 \vspace*{-0.2cm}
@@ -360,7 +373,7 @@
         {\color{brown}\small
         \begin{verbatim}
     stilts tmatch2 in1=obs_v.fits in2=obs_i.fits out=obs_iv.fits \
-                   matcher=sky values1="ra dec" values2="ra dec" params="2"
+                   matcher=sky values1="ra dec" values2="ra dec" params=1.5
         \end{verbatim}}
 \end{list0}
 
@@ -374,7 +387,7 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
                scorecol=DIST
                \ca{icmd1='select vmag<22'}                    \ccomm{# filter rows from input table 1}
                \cb{icmd2='addcol size hypot(ra_err,dec_err)'} \ccomm{# add a column to input table 2}
-               \cc{ocmd='sort DIST' ocmd='head 100'}    \ccomm{# keep only 100 closest matches in output}
+               \cc{ocmd='sort DIST' ocmd='head 100'}          \ccomm{# keep only 100 closest matches in output}
 \end{SaveVerbatim}
 
 \slide{STILTS Pipelines}
@@ -549,6 +562,7 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
   \put(31,-19){\includegraphics[height=5cm]{beans.jpg}}
   \put(24.7,-18.8){\includegraphics[height=6cm,angle=-15]{wkd.png}}
 }
+\aobSlide{}
 
 \end{document}
 
