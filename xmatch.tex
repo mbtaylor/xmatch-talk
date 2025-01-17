@@ -9,6 +9,9 @@
 \usepackage{ulem}  % provides \sout
 \usepackage[cm]{sfmath}
 
+\newif\ifrubric
+\rubricfalse
+
 % This is supposed to make underscores cut'n'pastable
 % Not sure what the lmodern package does or whether it's needed for this.
 % But it's not working (though apparently it did in nam2023)
@@ -57,6 +60,8 @@
   \addtocounter{page}{-1}
 }
 
+\ifrubric
+
 \rightfooter{}
 \MyLogo{}
 
@@ -77,6 +82,8 @@
 \newpage
 \bigword{Issues?}
 \newpage
+
+\fi
 
 \MyLogo{\color{grey}
         Mark Taylor, Crossmatching with TOPCAT and STILTS
@@ -549,6 +556,8 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
 
 \label{lastPage}
 
+\ifrubric
+
 \newcommand{\aobSlide}[1]{
 \newpage
 \rightfooter{}
@@ -565,6 +574,8 @@ stilts tmatch2 \ca{in1=obs_v.fits} \cb{in2=obs_i.fits} \cc{out=result.fits}
   \put(24.7,-18.8){\includegraphics[height=6cm,angle=-15]{wkd.png}}
 }
 \aobSlide{}
+
+\fi
 
 \end{document}
 
