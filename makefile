@@ -13,7 +13,7 @@ PLEI_GEOM = CIRCLE(56.75, 24.1166, 3)
 FIG_DATA = t0.fits t1.fits pairs.fits
 FIGS = match1.pdf match2.pdf match3.pdf match4.pdf
 
-PDFLATEX = env TEXINPUTS=:/mbt/local/share/texslides pdflatex
+PDFLATEX = pdflatex
 
 build: $(DOCS:=.pdf) $(FIG_DATA) $(MATCH_DATA)
 
